@@ -6,7 +6,7 @@ import { cn } from "./utils/cn";
 const vazir = localFont({ src: "./font/Vazirmatn[wght].woff2" });
 
 export const metadata = {
-  title: "ofood",
+  title: "ofood | افود",
   description: "It's Time",
 };
 
