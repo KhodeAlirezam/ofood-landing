@@ -1,113 +1,161 @@
-import Image from 'next/image'
+"use client";
+
+import { useEffect, useCallback, useState, useRef } from "react";
+import { cn } from "./utils/cn";
+import { Logo } from "./icons/logo";
+import { LogoFarsi } from "./icons/logoFarsi";
+import { Chip } from "./components/chip";
 
 export default function Home() {
+  const [ref, setImageRef] = useState(null);
+  const setElementRef = useCallback(
+    (element) =>
+      setImageRef((prev) =>
+        element ? (prev === element ? prev : element) : prev
+      ),
+    []
+  );
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const [step, setStep] = useState(1);
+
+  const interval = useRef();
+  useEffect(() => {
+    if (interval?.current) {
+      clearInterval(interval.current);
+    }
+    interval.current = setInterval(
+      () => setStep((prev) => (prev === 5 ? 1 : prev + 1)),
+      4000
+    );
+
+    return () => {
+      if (interval?.current) {
+        clearInterval(interval.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!ref || !ref?.complete) {
+      return;
+    }
+
+    setIsLoaded(true);
+  }, [ref]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <main className="relative h-full w-full">
+      <div className="h-full flex flex-col w-full overflow-hidden px-4 md:px-8">
+        <div className="w-full max-w-7xl mx-auto">
+          <div className="relative h-[256px] md:h-[360px] w-full">
+            <img
+              ref={setElementRef}
+              src="/hero.jpg"
+              className="object-cover object-center rounded-b-[40px] absolute inset-0 w-full h-full -z-10"
             />
-          </a>
+            <article className="flex flex-col w-full h-full p-8 md:p-14 gap-2 md:gap-10">
+              <Logo className={cn("w-[180px] h-full md:w-[360px] z-50 mx-auto translate-y-[30vh] transition-transform ease-linear duration-300", isLoaded && 'translate-y-0')} />
+              <header className="mx-auto w-full flex flex-col justify-center items-center gap-2">
+                <h1 className="text-white text-[24px] md:text-[48px] font-bold">
+                  دیگه وقتشه!
+                </h1>
+                <p className="text-white text-sm md:text-lg">
+                  سفارش آنلاین غذا
+                </p>
+              </header>
+            </article>
+          </div>
+        </div>
+        <div className="w-full relative h-full b inset-0 max-w-7xl mx-auto flex items-end justify-center">
+          <img
+            src="/bg-pattern.png"
+            className="object-cover object-bottom absolute inset-x-0 bottom-0 w-full h-full"
+          />
+          <div className="md:relative h-[300px] md:h-[600px] aspect-square border-dashed border-[3px] p-4 md:p-8 border-white rounded-full mb-[-133px] md:mb-[-266px]">
+            <div className="relative p-4 md:p-8 h-full w-full bg-[#DFF0F7] rounded-full animate-spin-slow">
+              <img
+                src="/food-plate.png"
+                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 1 && 'opacity-100')}
+              />
+               <img
+                src="/QQorme.png"
+                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 2 && 'opacity-100')}
+              />
+               <img
+                src="/QQeyme.png"
+                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 3 && 'opacity-100')}
+              />
+               <img
+                src="/MMeat.png"
+                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 4 && 'opacity-100')}
+              />
+               <img
+                src="/CChicken.png"
+                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 5 && 'opacity-100')}
+              />
+            </div>
+            <div className="left-4 md:left-[unset] absolute scale-[0.80] md:scale-[1] top-[1rem] md:top-[10rem] md:right-[-3rem] md:translate-x-[100%]">
+              <Chip
+                text="سفارش از قنادی"
+                iconDirection="left"
+                bubbleDirection="left"
+                icon={<img src="/Donat.png" className="w-full h-full object-contain"/>}
+                className="bg-white md:flex items-center justify-center"
+              />
+            </div>
+            <div className="right-4 md:right-[unset] absolute scale-[0.80] md:scale-[1] top-[3.5rem] md:top-0 md:left-[54px] md:translate-x-[-100%]">
+              <Chip
+                text="سفارش از کافه"
+                iconDirection="left"
+                bubbleDirection="right"
+                icon={<img src="/Coffe.png" className="w-full h-full object-contain"/>}
+                className="bg-white md:flex items-center justify-center"
+              />
+            </div>
+            <div className="left-4 md:left-[unset] absolute scale-[0.80] md:scale-[1] top-[6rem] md:top-[3rem] md:right-1 md:translate-x-[100%]">
+              <Chip
+                text="سفارش از رستوران"
+                iconDirection="right"
+                bubbleDirection="left"
+                icon={<img src="/Burger.png" className="w-full h-full object-contain"/>}
+                className="bg-white md:flex items-center justify-center"
+              />
+            </div>
+            <div className="right-4 md:right-[unset] absolute scale-[0.80] md:scale-[1] top-[8.5rem] md:top-32 md:left-[-2rem] md:translate-x-[-100%]">
+              <Chip
+                text="سفارش از تره‌بار"
+                iconDirection="right"
+                bubbleDirection="right"
+                icon={<img src="/Avocado.png" className="w-full h-full object-contain"/>}
+                className="bg-white md:flex items-center justify-center"
+              />
+            </div>
+          </div>
+        </div>
+        <div className={cn("relative h-[125px] md:h-[250px] w-full flex flex-nowrap mt-auto justify-center translate-y-[100%] transition-transform ease-linear duration-300", isLoaded && 'translate-y-0')}>
+          <div className="h-fit w-fit shadow-[0px_0px_150px_rgba(0,0,0,0.20)] rounded-full">
+            <div
+              style={{
+                clipPath: "circle(50% at 50% 50%)",
+              }}
+              className="bg-white rounded-full h-[calc(100vw*8)] max-h-[5000px] aspect-square flex justify-center"
+            >
+              <div className="h-[262px] md:h-[530px] mt-[-150px] md:mt-[-300px] bg-[#E8ECED] p-4 md:p-8 aspect-square rounded-full">
+                <div className="h-full bg-primary rounded-full aspect-square flex justify-center items-end">
+                  <LogoFarsi className="h-20 w-[100px] md:w-[200px] mb-[16px] md:mb-[72px]" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <div
+        className={cn(
+          "fixed inset-0 bg-primary opacity-100 transition-opacity duration-300",
+          isLoaded && "opacity-0"
+        )}
+      ></div>
     </main>
-  )
+  );
 }
