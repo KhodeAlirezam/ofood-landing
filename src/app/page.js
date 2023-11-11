@@ -49,20 +49,18 @@ export default function Home() {
       <div className="h-full flex flex-col w-full overflow-hidden px-4 md:px-8">
         <div className="w-full max-w-7xl mx-auto">
           <div className="relative h-[256px] md:h-[360px] w-full">
-            <img
-              ref={setElementRef}
-              src="/hero.jpg"
-              className="object-cover object-center rounded-b-[40px] absolute inset-0 w-full h-full -z-10"
-            />
-            <article className="flex flex-col w-full h-full p-8 md:p-14 gap-2 md:gap-10">
-              <Logo className={cn("w-[180px] h-full md:w-[360px] z-50 mx-auto translate-y-[30vh] transition-transform ease-linear duration-300", isLoaded && 'translate-y-0')} />
+            <article className="flex flex-col w-full h-full p-8 md:p-14 gap-2 md:gap-10 bg-primary rounded-b-[40px]">
+              <Logo
+                className={cn(
+                  "w-[180px] h-full md:w-[360px] z-50 mx-auto translate-y-[35vh] transition-transform ease-linear duration-500",
+                  isLoaded && "translate-y-0"
+                )}
+              />
               <header className="mx-auto w-full flex flex-col justify-center items-center gap-2">
                 <h1 className="text-white text-[24px] md:text-[48px] font-bold">
-                  دیگه وقتشه!
+                  تلاشی برای بهتر شدن
                 </h1>
-                <p className="text-white text-sm md:text-lg">
-                  سفارش آنلاین غذا
-                </p>
+                <p className="text-white text-sm md:text-lg">سامانه سفارش آنلاین غذا و ...</p>
               </header>
             </article>
           </div>
@@ -70,37 +68,58 @@ export default function Home() {
         <div className="w-full relative h-full b inset-0 max-w-7xl mx-auto flex items-end justify-center">
           <img
             src="/bg-pattern.png"
-            className="object-cover object-bottom absolute inset-x-0 bottom-0 w-full h-full"
+            className="object-cover object-bottom absolute inset-x-0 top-[-300px] md:top-[0] h-full w-full"
           />
-          <div className="md:relative h-[300px] md:h-[600px] aspect-square border-dashed border-[3px] p-4 md:p-8 border-white rounded-full mb-[-133px] md:mb-[-266px]">
+          <div className="md:relative h-[300px] md:h-[600px] aspect-square border-dashed border-[3px] p-4 md:p-8 border-white rounded-full">
             <div className="relative p-4 md:p-8 h-full w-full bg-[#DFF0F7] rounded-full animate-spin-slow">
               <img
+                ref={setElementRef}
                 src="/food-plate.png"
-                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 1 && 'opacity-100')}
+                className={cn(
+                  "absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0",
+                  step === 1 && "opacity-100"
+                )}
               />
-               <img
+              <img
                 src="/QQorme.png"
-                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 2 && 'opacity-100')}
+                className={cn(
+                  "absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0",
+                  step === 2 && "opacity-100"
+                )}
               />
-               <img
+              <img
                 src="/QQeyme.png"
-                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 3 && 'opacity-100')}
+                className={cn(
+                  "absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0",
+                  step === 3 && "opacity-100"
+                )}
               />
-               <img
+              <img
                 src="/MMeat.png"
-                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 4 && 'opacity-100')}
+                className={cn(
+                  "absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0",
+                  step === 4 && "opacity-100"
+                )}
               />
-               <img
+              <img
                 src="/CChicken.png"
-                className={cn("absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0", step === 5 && 'opacity-100')}
+                className={cn(
+                  "absolute object-cover object-center transition-opacity duration-500 ease-in opacity-0 w-full h-full p-4 md:p-8 inset-0",
+                  step === 5 && "opacity-100"
+                )}
               />
             </div>
-            <div className="left-4 md:left-[unset] absolute scale-[0.80] md:scale-[1] top-[1rem] md:top-[10rem] md:right-[-3rem] md:translate-x-[100%]">
+            {/* <div className="left-4 md:left-[unset] absolute scale-[0.80] md:scale-[1] top-[1rem] md:top-[10rem] md:right-[-3rem] md:translate-x-[100%]">
               <Chip
                 text="سفارش از قنادی"
                 iconDirection="left"
                 bubbleDirection="left"
-                icon={<img src="/Donat.png" className="w-full h-full object-contain"/>}
+                icon={
+                  <img
+                    src="/Donat.png"
+                    className="w-full h-full object-contain"
+                  />
+                }
                 className="bg-white md:flex items-center justify-center"
               />
             </div>
@@ -109,7 +128,12 @@ export default function Home() {
                 text="سفارش از کافه"
                 iconDirection="left"
                 bubbleDirection="right"
-                icon={<img src="/Coffe.png" className="w-full h-full object-contain"/>}
+                icon={
+                  <img
+                    src="/Coffe.png"
+                    className="w-full h-full object-contain"
+                  />
+                }
                 className="bg-white md:flex items-center justify-center"
               />
             </div>
@@ -118,7 +142,12 @@ export default function Home() {
                 text="سفارش از رستوران"
                 iconDirection="right"
                 bubbleDirection="left"
-                icon={<img src="/Burger.png" className="w-full h-full object-contain"/>}
+                icon={
+                  <img
+                    src="/Burger.png"
+                    className="w-full h-full object-contain"
+                  />
+                }
                 className="bg-white md:flex items-center justify-center"
               />
             </div>
@@ -127,13 +156,18 @@ export default function Home() {
                 text="سفارش از تره‌بار"
                 iconDirection="right"
                 bubbleDirection="right"
-                icon={<img src="/Avocado.png" className="w-full h-full object-contain"/>}
+                icon={
+                  <img
+                    src="/Avocado.png"
+                    className="w-full h-full object-contain"
+                  />
+                }
                 className="bg-white md:flex items-center justify-center"
               />
-            </div>
+            </div> */}
           </div>
         </div>
-        <div className={cn("relative h-[125px] md:h-[250px] w-full flex flex-nowrap mt-auto justify-center translate-y-[100%] transition-transform ease-linear duration-300", isLoaded && 'translate-y-0')}>
+        {/* <div className={cn("relative h-[125px] md:h-[250px] w-full flex flex-nowrap mt-auto justify-center translate-y-[100%] transition-transform ease-linear duration-500", isLoaded && 'translate-y-0')}>
           <div className="h-fit w-fit shadow-[0px_0px_150px_rgba(0,0,0,0.20)] rounded-full">
             <div
               style={{
@@ -148,11 +182,11 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
       <div
         className={cn(
-          "fixed inset-0 bg-primary opacity-100 transition-opacity duration-300",
+          "fixed inset-0 bg-primary opacity-100 transition-opacity duration-500",
           isLoaded && "opacity-0"
         )}
       ></div>
